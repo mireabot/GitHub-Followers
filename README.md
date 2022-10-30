@@ -1,2 +1,2 @@
-# GitHub-Followers
+# GitHub Followers
 GitHub Followers mobile client
