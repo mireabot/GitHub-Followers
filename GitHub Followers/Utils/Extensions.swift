@@ -82,6 +82,12 @@ extension UIView {
         heightAnchor.constraint(equalToConstant: height).isActive = true
     }
     
+    func setDimensionsWithMultiplier(width: NSLayoutDimension, height: NSLayoutDimension, value: CGFloat) {
+        translatesAutoresizingMaskIntoConstraints = false
+        widthAnchor.constraint(equalTo: width, multiplier: value).isActive = true
+        heightAnchor.constraint(equalTo: height, multiplier: value).isActive = true
+    }
+    
     func addConstraintsToFillView(_ view: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         anchor(top: view.topAnchor, left: view.leftAnchor,
@@ -102,6 +108,8 @@ extension UIColor {
     static let alertBackground = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
 }
 
+fileprivate var containerView: UIView!
+
 extension UIViewController {
     
     func presentControllerOnMainThread(title: String, message: String, button: String) {
@@ -111,5 +119,36 @@ extension UIViewController {
             controller.modalTransitionStyle = .crossDissolve
             self.present(controller, animated: true, completion: nil)
         }
+    }
+    
+    func showLoadingView() {
+        containerView = UIView(frame: view.bounds)
+        view.addSubview(containerView)
+        containerView.backgroundColor = .systemBackground
+        containerView.alpha = 0
+        
+        UIView.animate(withDuration: 0.25) { containerView.alpha = 0.8 }
+        
+        let indicator = UIActivityIndicatorView(style: .large)
+        containerView.addSubview(indicator)
+        
+        indicator.centerX(inView: view)
+        indicator.centerY(inView: view)
+        
+        indicator.startAnimating()
+        
+    }
+    
+    func dismissLoadingView() {
+        DispatchQueue.main.async {
+            containerView.removeFromSuperview()
+            containerView = nil
+        }
+    }
+    
+    func showEmptyState(with message: String, in view: UIView) {
+        let emptyState = EmptyStateView(message: message)
+        emptyState.frame = view.bounds
+        view.addSubview(emptyState)
     }
 }

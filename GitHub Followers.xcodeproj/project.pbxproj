@@ -26,6 +26,7 @@
 		35ACFA162911A0A5000211E3 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35ACFA152911A0A5000211E3 /* NetworkManager.swift */; };
 		35ACFA182911AAAF000211E3 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35ACFA172911AAAF000211E3 /* Enums.swift */; };
 		35E9D1F02912DD8300EED3B6 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E9D1EF2912DD8300EED3B6 /* UIHelper.swift */; };
+		35E9D1F22912F12500EED3B6 /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E9D1F12912F12500EED3B6 /* EmptyState.swift */; };
 		35FA98952911B26200025038 /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FA98942911B26200025038 /* FollowerCell.swift */; };
 		35FA98972911B3C400025038 /* AvatarImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FA98962911B3C400025038 /* AvatarImage.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		35ACFA152911A0A5000211E3 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		35ACFA172911AAAF000211E3 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		35E9D1EF2912DD8300EED3B6 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
+		35E9D1F12912F12500EED3B6 /* EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
 		35FA98942911B26200025038 /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
 		35FA98962911B3C400025038 /* AvatarImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				35FA98942911B26200025038 /* FollowerCell.swift */,
+				35E9D1F12912F12500EED3B6 /* EmptyState.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				35FA98972911B3C400025038 /* AvatarImage.swift in Sources */,
 				359F4F1F290F0342008C05AE /* AppDelegate.swift in Sources */,
 				359F4F40290F3D02008C05AE /* TextField.swift in Sources */,
+				35E9D1F22912F12500EED3B6 /* EmptyState.swift in Sources */,
 				35ACFA14291186C3000211E3 /* User.swift in Sources */,
 				35FA98952911B26200025038 /* FollowerCell.swift in Sources */,
 				359F4F39290F3397008C05AE /* FavoritesController.swift in Sources */,

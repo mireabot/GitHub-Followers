@@ -15,6 +15,8 @@ class FollowersController: UIViewController {
     var username: String!
     var collectionView: UICollectionView!
     var dataSourse: UICollectionViewDiffableDataSource<Section, Follower>!
+    var page: Int = 1
+    var hasMoreFollowers = true
     
     var followers: [Follower] = []
     
@@ -24,7 +26,7 @@ class FollowersController: UIViewController {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
         configureCollection()
-        fetchFollowers()
+        fetchFollowers(username: username, page: page)
         configureDataSourse()
     }
     
@@ -35,16 +37,24 @@ class FollowersController: UIViewController {
     
     //MARK: - Helpers
     
-    func fetchFollowers() {
-        Networkmanager.shared.getFollowers(for: username, page: 1) { [weak self] result in
-            
+    func fetchFollowers(username: String, page: Int) {
+        showLoadingView()
+        Networkmanager.shared.getFollowers(for: username, page: page) { [weak self] result in
             guard let self = self else { return }
             
+            self.dismissLoadingView()
+            
             switch result {
-                
             case .success(let followers):
-                print("Followers count = \(followers.count)")
-                self.followers = followers
+                if followers.count < 50 { self.hasMoreFollowers = false }
+                self.followers.append(contentsOf: followers)
+                
+                if self.followers.isEmpty {
+                    let message = "This user doesn't have followers 🥲"
+                    DispatchQueue.main.async { self.showEmptyState(with: message, in: self.view) }
+                    return
+                }
+                
                 self.updateData()
                 
             case .failure(let error):
@@ -56,6 +66,7 @@ class FollowersController: UIViewController {
     func configureCollection() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createCustomFlowLayout(in: view))
         view.addSubview(collectionView)
+        collectionView.delegate = self
         collectionView.backgroundColor = .systemBackground
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.followerCellID)
     }
@@ -76,6 +87,22 @@ class FollowersController: UIViewController {
         snapshot.appendItems(followers)
         DispatchQueue.main.async {
             self.dataSourse.apply(snapshot, animatingDifferences: true)
+        }
+    }
+}
+
+//MARK: - UICollectionViewDelegate
+
+extension FollowersController: UICollectionViewDelegate {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - height {
+            guard hasMoreFollowers else { return }
+            page += 1
+            fetchFollowers(username: username, page: page)
         }
     }
 }
