@@ -42,7 +42,7 @@ class SearchController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     //MARK: - Helpers
@@ -75,7 +75,7 @@ class SearchController: UIViewController {
     @objc func handlePassData() {
         let controller = FollowersController()
         guard isUsernameEmpty else {
-            print("DEBUG: No username")
+            presentControllerOnMainThread(title: "Empty username", message: "We need username to find something!", button: "Ok")
             return
         }
         

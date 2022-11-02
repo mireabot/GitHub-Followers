@@ -87,5 +87,29 @@ extension UIView {
         anchor(top: view.topAnchor, left: view.leftAnchor,
                bottom: view.bottomAnchor, right: view.rightAnchor)
     }
+    
+    func sizeConstaits(height: NSLayoutDimension? = nil, width: NSLayoutDimension? = nil) {
+        if let height = height {
+            heightAnchor.constraint(equalTo: height).isActive = true
+        }
+        if let width = width {
+            widthAnchor.constraint(equalTo: width).isActive = true
+        }
+    }
 }
 
+extension UIColor {
+    static let alertBackground = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
+}
+
+extension UIViewController {
+    
+    func presentControllerOnMainThread(title: String, message: String, button: String) {
+        DispatchQueue.main.async {
+            let controller = AlertController(title: title, message: message, button: button)
+            controller.modalPresentationStyle = .overFullScreen
+            controller.modalTransitionStyle = .crossDissolve
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+}
