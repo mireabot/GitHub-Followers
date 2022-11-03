@@ -19,12 +19,16 @@ class FollowersController: UIViewController {
     var hasMoreFollowers = true
     
     var followers: [Follower] = []
+    var filterFollowers: [Follower] = []
+    
+    var isSearching = false
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
+        configureSearchController()
         configureCollection()
         fetchFollowers(username: username, page: page)
         configureDataSourse()
@@ -55,7 +59,7 @@ class FollowersController: UIViewController {
                     return
                 }
                 
-                self.updateData()
+                self.updateData(on: self.followers)
                 
             case .failure(let error):
                 self.presentControllerOnMainThread(title: "Bad result", message: error.rawValue, button: "Close")
@@ -81,13 +85,22 @@ class FollowersController: UIViewController {
         })
     }
     
-    func updateData() {
+    func updateData(on followers: [Follower]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         snapshot.appendSections([.main])
         snapshot.appendItems(followers)
         DispatchQueue.main.async {
             self.dataSourse.apply(snapshot, animatingDifferences: true)
         }
+    }
+    
+    func configureSearchController() {
+        let controller = UISearchController()
+        controller.searchResultsUpdater = self
+        controller.searchBar.delegate = self
+        controller.searchBar.placeholder = "Search for username"
+        controller.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = controller
     }
 }
 
@@ -104,5 +117,30 @@ extension FollowersController: UICollectionViewDelegate {
             page += 1
             fetchFollowers(username: username, page: page)
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let follower = isSearching ? filterFollowers[indexPath.item] : followers[indexPath.item]
+        
+        let controller = ProfileController()
+        controller.username = follower.login
+        let nav = UINavigationController(rootViewController: controller)
+        present(nav, animated: true)
+    }
+}
+
+//MARK: - UISearchResultsUpdating, UISearchBarDelegate
+
+extension FollowersController: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
+        isSearching = true
+        filterFollowers = followers.filter({ $0.login.lowercased().contains(filter.lowercased()) })
+        updateData(on: filterFollowers)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        isSearching = false
+        updateData(on: followers)
     }
 }
