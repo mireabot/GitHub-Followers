@@ -12,7 +12,9 @@ class ProfileController: UIViewController {
     
     var username: String!
     
-    var user: User?
+    var user: User!
+    
+    private let headerView = UIView()
     
     //MARK: - LifeCycle
     
@@ -24,6 +26,7 @@ class ProfileController: UIViewController {
         navigationItem.rightBarButtonItem = done
         navigationItem.title = username
         
+        createUI()
         fetchInfo()
     }
     
@@ -35,11 +38,29 @@ class ProfileController: UIViewController {
             
             switch result {
             case .success(let user):
-                print(user.bio)
+                DispatchQueue.main.async {
+                    self.add(child: ProfileHeader(user: user), to: self.headerView)
+                }
             case .failure(let error):
                 self.presentControllerOnMainThread(title: "Something went wrong", message: error.rawValue, button: "Ok")
             }
         }
+    }
+    
+    func add(child: UIViewController, to container: UIView) {
+        addChild(child)
+        container.addSubview(child.view)
+        child.view.frame = container.bounds
+        child.didMove(toParent: self)
+    }
+    
+    func createUI() {
+        view.addSubview(headerView)
+        
+        headerView.backgroundColor = .systemBackground
+        
+        headerView.anchor(top: view.safeAreaLayoutGuide.topAnchor, height: 180)
+        headerView.leading(inView: view, leadingValue: padding20, trailingValue: padding20)
     }
     
     //MARK: - Selectors

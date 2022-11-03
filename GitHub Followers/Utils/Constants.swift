@@ -9,6 +9,7 @@ import UIKit
 
 let padding20: CGFloat = 20
 let padding8: CGFloat = 8
+let padding12: CGFloat = 12
 
 
 let followersEndpoint = "https://developer.github.com/v3/users/followers/"
