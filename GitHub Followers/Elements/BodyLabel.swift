@@ -33,5 +33,6 @@ class BodyLabel: UILabel {
         adjustsFontSizeToFitWidth = true
         minimumScaleFactor = 0.75
         lineBreakMode = .byWordWrapping
+        translatesAutoresizingMaskIntoConstraints = false
     }
 }

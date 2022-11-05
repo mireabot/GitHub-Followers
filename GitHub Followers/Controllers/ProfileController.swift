@@ -15,6 +15,11 @@ class ProfileController: UIViewController {
     var user: User!
     
     private let headerView = UIView()
+    private let firstView = UIView()
+    private let secondView = UIView()
+    private let dateLabel = BodyLabel(alignment: .center)
+    
+    var views: [UIView] = []
     
     //MARK: - LifeCycle
     
@@ -24,22 +29,27 @@ class ProfileController: UIViewController {
         
         let done = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDismiss))
         navigationItem.rightBarButtonItem = done
-        navigationItem.title = username
         
         createUI()
+        setConstraints()
         fetchInfo()
     }
     
     //MARK: - Helpers
     
     func fetchInfo() {
+        showLoadingView()
         Networkmanager.shared.getUserInfo(for: username) { [weak self] result in
             guard let self = self else { return }
+            self.dismissLoadingView()
             
             switch result {
             case .success(let user):
                 DispatchQueue.main.async {
                     self.add(child: ProfileHeader(user: user), to: self.headerView)
+                    self.add(child: ReposController(user: user), to: self.firstView)
+                    self.add(child: FollowerController(user: user), to: self.secondView)
+                    self.dateLabel.text = "GitHub user since \(user.createdAt.convertToDisplayFormat())"
                 }
             case .failure(let error):
                 self.presentControllerOnMainThread(title: "Something went wrong", message: error.rawValue, button: "Ok")
@@ -53,14 +63,50 @@ class ProfileController: UIViewController {
         child.view.frame = container.bounds
         child.didMove(toParent: self)
     }
+    //MARK: - UI
     
     func createUI() {
-        view.addSubview(headerView)
+        views = [headerView, firstView, secondView, dateLabel]
+        for item in views {
+            view.addSubview(item)
+        }
         
         headerView.backgroundColor = .systemBackground
+        firstView.backgroundColor = .systemBackground
+        secondView.backgroundColor = .systemBackground
+    }
+    
+    func setConstraints() {
+        let padding: CGFloat    = 20
+        let itemHeight: CGFloat = 140
         
-        headerView.anchor(top: view.safeAreaLayoutGuide.topAnchor, height: 180)
-        headerView.leading(inView: view, leadingValue: padding20, trailingValue: padding20)
+        views = [headerView, firstView, secondView, dateLabel]
+        
+        for itemView in views {
+            view.addSubview(itemView)
+            itemView.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                itemView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+                itemView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
+            ])
+        }
+        
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 180),
+            
+            firstView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
+            firstView.heightAnchor.constraint(equalToConstant: itemHeight),
+            
+            secondView.topAnchor.constraint(equalTo: firstView.bottomAnchor, constant: padding),
+            secondView.heightAnchor.constraint(equalToConstant: itemHeight),
+            
+            dateLabel.topAnchor.constraint(equalTo: secondView.bottomAnchor, constant: padding),
+            dateLabel.heightAnchor.constraint(equalToConstant: 18)
+            
+        ])
+        
     }
     
     //MARK: - Selectors

@@ -54,13 +54,15 @@ class SearchController: UIViewController {
         
         view.addSubview(usernameTextField)
         usernameTextField.anchor(top: logoImageView.bottomAnchor, paddingTop: 48, height: 50)
-        usernameTextField.leading(inView: view, leadingValue: 50, trailingValue: 50)
+        usernameTextField.leading(inView: view, with: 50)
+        usernameTextField.trailing(inView: view, with: 50)
         usernameTextField.centerX(inView: view)
         usernameTextField.delegate = self
         
         view.addSubview(serviceButton)
         serviceButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingTop: 48, paddingBottom: 50, height: 50)
-        serviceButton.leading(inView: view, leadingValue: 50, trailingValue: 50)
+        serviceButton.leading(inView: view, with: 50)
+        serviceButton.trailing(inView: view, with: 50)
         serviceButton.centerX(inView: view)
         
     }

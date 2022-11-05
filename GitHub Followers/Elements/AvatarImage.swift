@@ -31,6 +31,7 @@ class AvatarImage : UIImageView {
         layer.cornerRadius = 10
         clipsToBounds = true
         image = placeholder
+        translatesAutoresizingMaskIntoConstraints = false
     }
     
     func downloadImage(from url: String) {

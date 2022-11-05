@@ -41,10 +41,12 @@ class FollowerCell: UICollectionViewCell {
         addSubview(usernameLabel)
         
         avatarImage.anchor(top: contentView.topAnchor, paddingTop: padding8)
-        avatarImage.leading(inView: contentView, leadingValue: padding8, trailingValue: padding8)
+        avatarImage.leading(inView: contentView, with: padding8)
+        avatarImage.trailing(inView: contentView, with: padding8)
         avatarImage.sizeConstaits(height: avatarImage.widthAnchor)
         
         usernameLabel.anchor(top: avatarImage.bottomAnchor, paddingTop: 12, height: 20)
-        usernameLabel.leading(inView: contentView, leadingValue: padding8, trailingValue: padding8)
+        usernameLabel.leading(inView: contentView, with: padding8)
+        usernameLabel.trailing(inView: contentView, with: padding8)
     }
 }

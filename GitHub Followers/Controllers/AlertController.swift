@@ -56,21 +56,24 @@ class AlertController: UIViewController {
         titleLabel.text = alertText ?? "Default Text"
         
         titleLabel.anchor(top: container.topAnchor, paddingTop: 20, height: 28)
-        titleLabel.leading(inView: container, leadingValue: padding20, trailingValue: padding20)
+        titleLabel.leading(inView: container, with: padding20)
+        titleLabel.trailing(inView: container, with: padding20)
         
         container.addSubview(serviceButton)
         serviceButton.setTitle(buttonText ?? "Ok", for: .normal)
         serviceButton.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
         
         serviceButton.anchor(bottom: container.bottomAnchor, paddingBottom: 12, height: 44)
-        serviceButton.leading(inView: container, leadingValue: padding20, trailingValue: padding20)
+        serviceButton.leading(inView: container, with: padding20)
+        serviceButton.trailing(inView: container, with: padding20)
         
         container.addSubview(messageLabel)
         messageLabel.text = messageText
         messageLabel.numberOfLines = 4
         
         messageLabel.anchor(top: titleLabel.bottomAnchor, bottom: serviceButton.topAnchor)
-        messageLabel.leading(inView: container, leadingValue: padding20, trailingValue: padding20)
+        messageLabel.leading(inView: container, with: padding20)
+        messageLabel.trailing(inView: container, with: padding20)
         
     }
     

@@ -42,12 +42,14 @@ class EmptyStateView: UIView {
         messageLabel.textColor = .secondaryLabel
         
         messageLabel.centerY(inView: self, constant: -150)
-        messageLabel.leading(inView: self, leadingValue: 40, trailingValue: 40)
+        messageLabel.leading(inView: self, with: 40)
+        messageLabel.trailing(inView: self, with: 40)
         messageLabel.anchor(height: 200)
         
         logoImage.image = UIImage(named: "empty-state-logo")
         logoImage.setDimensionsWithMultiplier(width: self.widthAnchor, height: self.heightAnchor, value: 1.3)
-        logoImage.leading(inView: self, leadingValue: 0, trailingValue: 170)
+        logoImage.leading(inView: self)
+        logoImage.trailing(inView: self, with: 170)
         logoImage.anchor(bottom: self.bottomAnchor, paddingBottom: 40)
     }
 }

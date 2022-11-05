@@ -51,7 +51,7 @@ class ProfileHeader: UIViewController {
         
         locationImage.image = UIImage(systemName: "location.circle")
         locationImage.tintColor = .systemGreen
-        locationImage.setDimensions(width: 24, height: 24)
+        locationImage.setDimensions(width: 20, height: 20)
         
         bioLabel.text = user.bio ?? "No bio"
         bioLabel.numberOfLines = 3
@@ -110,3 +110,29 @@ class ProfileHeader: UIViewController {
         
     }
 }
+
+/*
+  avatarImage.anchor(top: view.topAnchor, paddingTop: padding20, width: 90, height: 90)
+  avatarImage.leading(inView: view)
+ 
+  usernameLabel.anchor(top: avatarImage.topAnchor, height: 38)
+  usernameLabel.leading(inComplexView: avatarImage.trailingAnchor, constant: padding12)
+  usernameLabel.trailing(inView: view)
+  
+  nameLabel.centerY(inView: avatarImage,constant: padding8)
+  nameLabel.setDimensions(height: 20)
+  nameLabel.leading(inComplexView: avatarImage.trailingAnchor, constant: padding12)
+  nameLabel.trailing(inView: view)
+  
+  locationImage.anchor(bottom: avatarImage.bottomAnchor, width: 20, height: 20)
+  locationImage.leading(inComplexView: avatarImage.trailingAnchor, constant: padding12)
+  
+  locationLabel.centerY(inView: locationImage)
+  locationLabel.leading(inComplexView: locationImage.trailingAnchor, constant: 5)
+  locationLabel.trailing(inView: view)
+  locationLabel.setDimensions(height: 20)
+  
+  bioLabel.anchor(top: avatarImage.bottomAnchor, paddingTop: padding12, height: 60)
+  bioLabel.leading(inView: avatarImage)
+  bioLabel.trailing(inView: view)
+ */

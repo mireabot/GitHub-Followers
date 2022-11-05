@@ -7,6 +7,8 @@
 
 import UIKit
 
+//MARK: - UIView
+
 extension UIView {
     func anchor(top: NSLayoutYAxisAnchor? = nil,
                 left: NSLayoutXAxisAnchor? = nil,
@@ -71,15 +73,28 @@ extension UIView {
         }
     }
     
-    func leading(inView view: UIView, leadingValue: CGFloat, trailingValue: CGFloat) {
-        leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingValue).isActive = true
-        trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -trailingValue).isActive = true
+    func leading(inView view: UIView, with leadingValue: CGFloat? = 0) {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingValue!).isActive = true
     }
     
-    func setDimensions(width: CGFloat, height: CGFloat) {
+    func trailing(inView view: UIView, with trailingValue: CGFloat? = 0){
         translatesAutoresizingMaskIntoConstraints = false
-        widthAnchor.constraint(equalToConstant: width).isActive = true
-        heightAnchor.constraint(equalToConstant: height).isActive = true
+        
+        trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -trailingValue!).isActive = true
+    }
+    
+    func leading(toTrailing view: UIView, constant: CGFloat? = 0) {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        leadingAnchor.constraint(equalTo: view.trailingAnchor, constant: constant!).isActive = true
+    }
+    
+    func setDimensions(width: CGFloat? = 0, height: CGFloat? = 0) {
+        translatesAutoresizingMaskIntoConstraints = false
+        widthAnchor.constraint(equalToConstant: width!).isActive = true
+        heightAnchor.constraint(equalToConstant: height!).isActive = true
     }
     
     func setDimensionsWithMultiplier(width: NSLayoutDimension, height: NSLayoutDimension, value: CGFloat) {
@@ -104,12 +119,15 @@ extension UIView {
     }
 }
 
+//MARK: - UIColor
+
 extension UIColor {
     static let alertBackground = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
 }
 
-fileprivate var containerView: UIView!
+//MARK: - UIViewController
 
+fileprivate var containerView: UIView!
 extension UIViewController {
     
     func presentControllerOnMainThread(title: String, message: String, button: String) {
@@ -150,5 +168,35 @@ extension UIViewController {
         let emptyState = EmptyStateView(message: message)
         emptyState.frame = view.bounds
         view.addSubview(emptyState)
+    }
+}
+
+//MARK: - Date
+
+extension Date {
+    func convertToMonthYearFormat() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM yyyy"
+        
+        return formatter.string(from: self)
+    }
+}
+
+//MARK: - String
+
+extension String {
+    func convertToDate() -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = .current
+        
+        return formatter.date(from: self)
+    }
+    
+    func convertToDisplayFormat() -> String {
+        guard let date = self.convertToDate() else { return "N/A" }
+        
+        return date.convertToMonthYearFormat()
     }
 }
