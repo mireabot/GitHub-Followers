@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 //MARK: - UIView
 
@@ -130,7 +131,7 @@ extension UIColor {
 fileprivate var containerView: UIView!
 extension UIViewController {
     
-    func presentControllerOnMainThread(title: String, message: String, button: String) {
+    func presentAlertOnMainThread(title: String, message: String, button: String) {
         DispatchQueue.main.async {
             let controller = AlertController(title: title, message: message, button: button)
             controller.modalPresentationStyle = .overFullScreen
@@ -162,6 +163,12 @@ extension UIViewController {
             containerView.removeFromSuperview()
             containerView = nil
         }
+    }
+    
+    func showSafariController(with url: URL) {
+        let safariController = SFSafariViewController(url: url)
+        safariController.preferredControlTintColor = .systemGreen
+        present(safariController, animated: true)
     }
     
     func showEmptyState(with message: String, in view: UIView) {

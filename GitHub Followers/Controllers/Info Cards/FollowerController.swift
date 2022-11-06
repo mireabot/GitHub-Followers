@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FollowerController: ItemInfoController {
+class FollowerController: CardInfoController {
     //MARK: - Properties
     
     //MARK: - LifeCycle
@@ -24,6 +24,10 @@ class FollowerController: ItemInfoController {
         secondView.setType(type: .following, with: user.following)
         
         actionButton.setBackground(backgroundColor: .systemGreen, title: "Open Followers List")
+    }
+    
+    override func handleTapped() {
+        delegate.didTapGetFollowers(for: user)
     }
 }
 

@@ -12,7 +12,6 @@ class EmptyStateView: UIView {
     
     private let messageLabel = TitleLabel(alignment: .center, fontSize: 28)
     
-    private let logoImage = UIImageView()
     
     //MARK: - LifeCycle
     
@@ -36,7 +35,6 @@ class EmptyStateView: UIView {
     
     private func configureUI() {
         addSubview(messageLabel)
-        addSubview(logoImage)
         
         messageLabel.numberOfLines = 3
         messageLabel.textColor = .secondaryLabel
@@ -45,11 +43,5 @@ class EmptyStateView: UIView {
         messageLabel.leading(inView: self, with: 40)
         messageLabel.trailing(inView: self, with: 40)
         messageLabel.anchor(height: 200)
-        
-        logoImage.image = UIImage(named: "empty-state-logo")
-        logoImage.setDimensionsWithMultiplier(width: self.widthAnchor, height: self.heightAnchor, value: 1.3)
-        logoImage.leading(inView: self)
-        logoImage.trailing(inView: self, with: 170)
-        logoImage.anchor(bottom: self.bottomAnchor, paddingBottom: 40)
     }
 }

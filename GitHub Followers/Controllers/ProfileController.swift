@@ -6,6 +6,12 @@
 //
 
 import UIKit
+import SafariServices
+
+protocol ProfileControllerDelegate: AnyObject {
+    func didTapGitHubProfile(for user: User)
+    func didTapGetFollowers(for user: User)
+}
 
 class ProfileController: UIViewController {
     //MARK: - Properties
@@ -13,6 +19,8 @@ class ProfileController: UIViewController {
     var username: String!
     
     var user: User!
+    
+    weak var delegate: FollowersControllerDelegate!
     
     private let headerView = UIView()
     private let firstView = UIView()
@@ -46,13 +54,10 @@ class ProfileController: UIViewController {
             switch result {
             case .success(let user):
                 DispatchQueue.main.async {
-                    self.add(child: ProfileHeader(user: user), to: self.headerView)
-                    self.add(child: ReposController(user: user), to: self.firstView)
-                    self.add(child: FollowerController(user: user), to: self.secondView)
-                    self.dateLabel.text = "GitHub user since \(user.createdAt.convertToDisplayFormat())"
+                    self.configureElements(with: user)
                 }
             case .failure(let error):
-                self.presentControllerOnMainThread(title: "Something went wrong", message: error.rawValue, button: "Ok")
+                self.presentAlertOnMainThread(title: "Something went wrong", message: error.rawValue, button: "Ok")
             }
         }
     }
@@ -109,9 +114,41 @@ class ProfileController: UIViewController {
         
     }
     
+    func configureElements(with user: User) {
+        let reposController = ReposController(user: user)
+        reposController.delegate = self
+        
+        let followersController = FollowerController(user: user)
+        followersController.delegate = self
+        
+        self.add(child: ProfileHeader(user: user), to: self.headerView)
+        self.add(child: reposController, to: self.firstView)
+        self.add(child: followersController, to: self.secondView)
+        self.dateLabel.text = "GitHub user since \(user.createdAt.convertToDisplayFormat())"
+    }
+    
     //MARK: - Selectors
     
     @objc func handleDismiss() {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+//MARK: - ProfileControllerDelegate
+
+extension ProfileController: ProfileControllerDelegate {
+    func didTapGitHubProfile(for user: User) {
+        guard let url = URL(string: user.htmlUrl!) else { return presentAlertOnMainThread(title: "Invalid URL", message: "The url is wrong.", button: "Ok") }
+        
+        showSafariController(with: url)
+    }
+    
+    func didTapGetFollowers(for user: User) {
+        guard user.followers != 0 else {
+            presentAlertOnMainThread(title: "No followers!", message: "User doesn't have followers.", button: "Ok")
+            return
+        }
+        delegate.didRequestFollowers(for: user.login)
+        dismiss(animated: true)
     }
 }

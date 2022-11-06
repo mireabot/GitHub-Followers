@@ -14,7 +14,7 @@ enum ItemInfoType {
     case following
 }
 
-class InfoView: UIView {
+class CardInfoView: UIView {
     //MARK: - Properties
     
     private let imageView = UIImageView()

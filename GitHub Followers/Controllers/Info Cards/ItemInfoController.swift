@@ -7,15 +7,17 @@
 
 import UIKit
 
-class ItemInfoController: UIViewController {
+class CardInfoController: UIViewController {
     //MARK: - Properties
     
     let stackView = UIStackView()
-    let firstView = InfoView()
-    let secondView = InfoView()
+    let firstView = CardInfoView()
+    let secondView = CardInfoView()
     let actionButton = ReusableButton()
     
     var user: User!
+    
+    weak var delegate: ProfileControllerDelegate!
     
     //MARK: - LifeCycle
     
@@ -62,6 +64,8 @@ class ItemInfoController: UIViewController {
             actionButton.heightAnchor.constraint(equalToConstant: 44)
         ])
         
+        actionButton.addTarget(self, action: #selector(handleTapped), for: .touchUpInside)
+        
     }
     
     private func configureStack() {
@@ -73,4 +77,6 @@ class ItemInfoController: UIViewController {
     }
     
     //MARK: - Selectors
+    
+    @objc func handleTapped() {}
 }

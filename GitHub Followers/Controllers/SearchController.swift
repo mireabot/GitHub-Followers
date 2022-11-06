@@ -77,7 +77,7 @@ class SearchController: UIViewController {
     @objc func handlePassData() {
         let controller = FollowersController()
         guard isUsernameEmpty else {
-            presentControllerOnMainThread(title: "Empty username", message: "We need username to find something!", button: "Ok")
+            presentAlertOnMainThread(title: "Empty username", message: "We need username to find something!", button: "Ok")
             return
         }
         

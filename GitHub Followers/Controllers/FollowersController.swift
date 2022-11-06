@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol FollowersControllerDelegate: AnyObject {
+    func didRequestFollowers(for username: String)
+}
+
 class FollowersController: UIViewController {
     //MARK: - Properties
     
@@ -32,13 +36,15 @@ class FollowersController: UIViewController {
         configureCollection()
         fetchFollowers(username: username, page: page)
         configureDataSourse()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddTapped))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
-    
+        
     //MARK: - Helpers
     
     func fetchFollowers(username: String, page: Int) {
@@ -62,10 +68,36 @@ class FollowersController: UIViewController {
                 self.updateData(on: self.followers)
                 
             case .failure(let error):
-                self.presentControllerOnMainThread(title: "Bad result", message: error.rawValue, button: "Close")
+                self.presentAlertOnMainThread(title: "Bad result", message: error.rawValue, button: "Close")
             }
         }
     }
+    
+    //MARK: - Selectors
+    @objc func handleAddTapped() {
+        Networkmanager.shared.getUserInfo(for: username) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let user):
+                let favorite = Follower(login: user.login, avatarUrl: user.avatarUrl)
+                PersistenceManager.update(favorite: favorite, actionType: .add) { [weak self] error in
+                    guard let self = self else { return }
+                    
+                    guard let error = error else {
+                        self.presentAlertOnMainThread(title: "Succsess!", message: "User was added to favorites list.", button: "Ok")
+                        return
+                    }
+                    
+                    self.presentAlertOnMainThread(title: "Something went wrong", message: error.rawValue, button: "Ok")
+                }
+                
+            case .failure(let error):
+                self.presentAlertOnMainThread(title: "Something went wrong", message: error.rawValue, button: "Ok")
+            }
+        }
+    }
+    
     //MARK: - UICollectionViewFlowLayout
     func configureCollection() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createCustomFlowLayout(in: view))
@@ -124,6 +156,7 @@ extension FollowersController: UICollectionViewDelegate {
         
         let controller = ProfileController()
         controller.username = follower.login
+        controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         present(nav, animated: true)
     }
@@ -142,5 +175,25 @@ extension FollowersController: UISearchResultsUpdating, UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
         updateData(on: followers)
+    }
+}
+
+
+//MARK: - FollowersControllerDelegate
+
+extension FollowersController: FollowersControllerDelegate {
+    
+    fileprivate func updateCollection(_ username: String) {
+        self.username = username
+        title = username
+        page = 1
+        followers.removeAll()
+        filterFollowers.removeAll()
+        collectionView.setContentOffset(.zero, animated: true)
+        fetchFollowers(username: username, page: page)
+    }
+    
+    func didRequestFollowers(for username: String) {
+        updateCollection(username)
     }
 }

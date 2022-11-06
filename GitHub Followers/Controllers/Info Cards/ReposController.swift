@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReposController: ItemInfoController {
+class ReposController: CardInfoController {
     //MARK: - Properties
     
     //MARK: - LifeCycle
@@ -24,5 +24,9 @@ class ReposController: ItemInfoController {
         secondView.setType(type: .gists, with: user.publicGists)
         
         actionButton.setBackground(backgroundColor: .systemPurple, title: "Open GitHub Profile")
+    }
+    
+    override func handleTapped() {
+        delegate.didTapGitHubProfile(for: user)
     }
 }
