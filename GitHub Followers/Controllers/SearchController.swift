@@ -26,9 +26,9 @@ class SearchController: UIViewController {
         return button
     }()
     
-    var isUsernameEmpty: Bool {
-        return !usernameTextField.text!.isEmpty
-    }
+    var logoImageTopAnchor: NSLayoutConstraint!
+    
+    var isUsernameEmpty: Bool { return !usernameTextField.text!.isEmpty }
     
     //MARK: - LifeCycle
     
@@ -42,6 +42,7 @@ class SearchController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        usernameTextField.text = ""
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
@@ -49,8 +50,11 @@ class SearchController: UIViewController {
     
     func configureUI() {
         view.addSubview(logoImageView)
-        logoImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 100)
         logoImageView.centerX(inView: view)
+        
+        let top: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 20 : 80
+        logoImageTopAnchor = logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: top)
+        logoImageTopAnchor.isActive = true
         
         view.addSubview(usernameTextField)
         usernameTextField.anchor(top: logoImageView.bottomAnchor, paddingTop: 48, height: 50)
@@ -68,21 +72,21 @@ class SearchController: UIViewController {
     }
     
     func createDismissGesture() {
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
     
     //MARK: - Selectors
     
     @objc func handlePassData() {
-        let controller = FollowersController()
+        let controller = FollowersController(username: usernameTextField.text!)
         guard isUsernameEmpty else {
             presentAlertOnMainThread(title: "Empty username", message: "We need username to find something!", button: "Ok")
             return
         }
         
-        controller.username = usernameTextField.text
-        controller.title = usernameTextField.text
+        usernameTextField.resignFirstResponder()
+        
         navigationController?.pushViewController(controller, animated: true)
     }
 }

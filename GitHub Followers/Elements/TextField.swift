@@ -38,6 +38,7 @@ class ReusableTextField: UITextField {
         autocorrectionType = .no
         autocapitalizationType = .none
         returnKeyType = .go
+        clearButtonMode = .whileEditing
         placeholder = "Your username"
     }
 }
