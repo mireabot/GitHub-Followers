@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreText
 
 enum ActionType {
     case add, remove
@@ -73,3 +72,4 @@ enum PersistenceManager {
         }
     }
 }
+

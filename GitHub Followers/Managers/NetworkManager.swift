@@ -2,8 +2,9 @@
 //  NetworkManager.swift
 //  GitHub Followers
 //
-//  Created by Mikhail Kolkov on 11/1/22.
+//  Created by Mikhail Kolkov on 11/6/22.
 //
+
 
 import UIKit
 
@@ -48,7 +49,7 @@ class Networkmanager {
             } catch {
                 completion(.failure(.invalidData))
             }
-
+            
         }
         
         task.resume()
@@ -88,7 +89,7 @@ class Networkmanager {
             } catch {
                 completion(.failure(.invalidData))
             }
-
+            
         }
         
         task.resume()
