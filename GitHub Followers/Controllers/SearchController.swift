@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchController: UIViewController {
+class SearchController: DataLoadingController {
     //MARK: - Properties
     
     private let logoImageView: UIImageView = {

@@ -11,7 +11,7 @@ protocol FollowersControllerDelegate: AnyObject {
     func didRequestFollowers(for username: String)
 }
 
-class FollowersController: UIViewController {
+class FollowersController: DataLoadingController {
     //MARK: - Properties
     
     enum Section { case main }

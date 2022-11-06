@@ -20,11 +20,10 @@ class ReusableButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(background: UIColor, title: String) {
-        super.init(frame: .zero)
+    convenience init(background: UIColor, title: String) {
+        self.init(frame: .zero)
         self.backgroundColor = background
         self.setTitle(title, for: .normal)
-        configureUI()
     }
     
     //MARK: - Helpers

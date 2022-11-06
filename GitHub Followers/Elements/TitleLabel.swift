@@ -15,11 +15,10 @@ class TitleLabel: UILabel {
         configureUI()
     }
     
-    init(alignment: NSTextAlignment, fontSize: CGFloat) {
-        super.init(frame: .zero)
+    convenience init(alignment: NSTextAlignment, fontSize: CGFloat) {
+        self.init(frame: .zero)
         self.textAlignment = alignment
         self.font = UIFont.boldSystemFont(ofSize: fontSize)
-        configureUI()
     }
     
     required init?(coder: NSCoder) {

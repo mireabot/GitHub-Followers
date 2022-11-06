@@ -13,7 +13,7 @@ protocol ProfileControllerDelegate: AnyObject {
     func didTapGetFollowers(for user: User)
 }
 
-class ProfileController: UIViewController {
+class ProfileController: DataLoadingController {
     //MARK: - Properties
     
     var username: String!
@@ -124,7 +124,7 @@ class ProfileController: UIViewController {
         self.add(child: ProfileHeader(user: user), to: self.headerView)
         self.add(child: reposController, to: self.firstView)
         self.add(child: followersController, to: self.secondView)
-        self.dateLabel.text = "GitHub user since \(user.createdAt.convertToDisplayFormat())"
+        self.dateLabel.text = "GitHub user since \(user.createdAt.convertToMonthYearFormat())"
     }
     
     //MARK: - Selectors

@@ -15,10 +15,9 @@ class SecondaryLabel: UILabel {
         configureUI()
     }
     
-    init(size: CGFloat) {
-        super.init(frame: .zero)
+    convenience init(size: CGFloat) {
+        self.init(frame: .zero)
         self.font = UIFont.systemFont(ofSize: size, weight: .medium)
-        configureUI()
     }
     
     required init?(coder: NSCoder) {

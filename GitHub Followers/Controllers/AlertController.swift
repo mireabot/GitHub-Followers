@@ -10,7 +10,7 @@ import UIKit
 class AlertController: UIViewController {
     //MARK: - Properties
     
-    private let container = UIView()
+    private let container = AlertView()
     
     private let titleLabel = TitleLabel(alignment: .center, fontSize: 20)
     
@@ -44,10 +44,6 @@ class AlertController: UIViewController {
     
     private func configureUI() {
         view.addSubview(container)
-        container.backgroundColor = .systemBackground
-        container.layer.cornerRadius = 15
-        container.layer.borderWidth = 2
-        container.layer.borderColor = UIColor.white.cgColor
         
         container.center(inView: view)
         container.anchor(width: 280, height: 220)

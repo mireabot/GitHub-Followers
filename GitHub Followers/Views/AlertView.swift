@@ -1,18 +1,14 @@
 //
-//  AvatarImage.swift
+//  AlertView.swift
 //  GitHub Followers
 //
-//  Created by Mikhail Kolkov on 11/1/22.
+//  Created by Mikhail Kolkov on 11/6/22.
 //
 
 import UIKit
 
-class AvatarImage : UIImageView {
+class AlertView: UIView {
     //MARK: - Properties
-    
-    private let placeholder = UIImage(named: "avatar-placeholder")!
-    
-    let cache = Networkmanager.shared.cache
     
     //MARK: - LifeCycle
     
@@ -28,9 +24,9 @@ class AvatarImage : UIImageView {
     //MARK: - Helpers
     
     private func configureUI() {
-        layer.cornerRadius = 10
-        clipsToBounds = true
-        image = placeholder
-        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .systemBackground
+        layer.cornerRadius = 15
+        layer.borderWidth = 2
+        layer.borderColor = UIColor.white.cgColor
     }
 }

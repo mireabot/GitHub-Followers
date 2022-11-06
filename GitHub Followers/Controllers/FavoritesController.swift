@@ -8,7 +8,7 @@
 import UIKit
 
 
-class FavoritesController: UIViewController {
+class FavoritesController: DataLoadingController {
     //MARK: - Properties
     
     private let tableView = UITableView()

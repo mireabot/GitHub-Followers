@@ -15,10 +15,9 @@ class BodyLabel: UILabel {
         configureUI()
     }
     
-    init(alignment: NSTextAlignment) {
-        super.init(frame: .zero)
+    convenience init(alignment: NSTextAlignment) {
+        self.init(frame: .zero)
         self.textAlignment = alignment
-        configureUI()
     }
     
     required init?(coder: NSCoder) {
