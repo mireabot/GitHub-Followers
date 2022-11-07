@@ -32,8 +32,8 @@ class DataLoadingController : UIViewController {
         let indicator = UIActivityIndicatorView(style: .large)
         containerView.addSubview(indicator)
         
-        indicator.centerX(inView: view)
-        indicator.centerY(inView: view)
+        indicator.centerX(inView: containerView)
+        indicator.centerY(inView: containerView)
         
         indicator.startAnimating()
         
