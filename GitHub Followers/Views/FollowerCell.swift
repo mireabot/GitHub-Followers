@@ -41,16 +41,15 @@ class FollowerCell: UICollectionViewCell {
     //MARK: - Helpers
     
     private func configureUI() {
-        addSubview(avatarImage)
-        addSubview(usernameLabel)
+        addSubviews(avatarImage, usernameLabel)
         
-        avatarImage.anchor(top: contentView.topAnchor, paddingTop: padding8)
-        avatarImage.leading(inView: contentView, with: padding8)
-        avatarImage.trailing(inView: contentView, with: padding8)
+        avatarImage.anchor(top: topAnchor, paddingTop: padding8)
+        avatarImage.leading(inView: self, with: padding8)
+        avatarImage.trailing(inView: self, with: padding8)
         avatarImage.sizeConstaits(height: avatarImage.widthAnchor)
         
         usernameLabel.anchor(top: avatarImage.bottomAnchor, paddingTop: 12, height: 20)
-        usernameLabel.leading(inView: contentView, with: padding8)
-        usernameLabel.trailing(inView: contentView, with: padding8)
+        usernameLabel.leading(inView: self, with: padding8)
+        usernameLabel.trailing(inView: self, with: padding8)
     }
 }

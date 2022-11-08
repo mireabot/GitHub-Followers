@@ -118,6 +118,10 @@ extension UIView {
             widthAnchor.constraint(equalTo: width).isActive = true
         }
     }
+    
+    func addSubviews(_ views: UIView...) {
+        for view in views { addSubview(view) }
+    }
 }
 
 //MARK: - UIColor
@@ -153,5 +157,18 @@ extension String {
         guard let date = self.convertToDate() else { return "N/A" }
         
         return date.convertToMonthYearFormat()
+    }
+}
+
+//MARK: - UITableView
+
+extension UITableView {
+    
+    func removeExtraCells() {
+        tableFooterView = UIView(frame: .zero)
+    }
+    
+    func reloadDataOnMainThread() {
+        DispatchQueue.main.async { self.reloadData() }
     }
 }

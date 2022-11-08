@@ -37,9 +37,7 @@ class CardInfoView: UIView {
     //MARK: - Helpers
     
     private func configureUI() {
-        addSubview(imageView)
-        addSubview(titleLabel)
-        addSubview(countLabel)
+        addSubviews(imageView, titleLabel, countLabel)
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill

@@ -49,21 +49,20 @@ class SearchController: DataLoadingController {
     //MARK: - Helpers
     
     func configureUI() {
-        view.addSubview(logoImageView)
+        view.addSubviews(logoImageView, usernameTextField, serviceButton)
+        
         logoImageView.centerX(inView: view)
         
         let top: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 20 : 80
         logoImageTopAnchor = logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: top)
         logoImageTopAnchor.isActive = true
         
-        view.addSubview(usernameTextField)
         usernameTextField.anchor(top: logoImageView.bottomAnchor, paddingTop: 48, height: 50)
         usernameTextField.leading(inView: view, with: 50)
         usernameTextField.trailing(inView: view, with: 50)
         usernameTextField.centerX(inView: view)
         usernameTextField.delegate = self
         
-        view.addSubview(serviceButton)
         serviceButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingTop: 48, paddingBottom: 50, height: 50)
         serviceButton.leading(inView: view, with: 50)
         serviceButton.trailing(inView: view, with: 50)

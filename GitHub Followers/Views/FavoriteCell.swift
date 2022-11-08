@@ -40,9 +40,7 @@ class FavoriteCell : UITableViewCell {
     //MARK: - Helpers
     
     private func configureUI() {
-        addSubview(avatarImage)
-        addSubview(usernameLabel)
-        
+        addSubviews(avatarImage, usernameLabel)
         accessoryType = .disclosureIndicator
         
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
