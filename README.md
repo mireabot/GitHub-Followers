@@ -10,11 +10,12 @@
 <p align="center">
   <a href="features">Features</a> •
   <a href="#tech-stack">Tech Stack</a> •
-  <a href="#license">License</a>
+  <a href="#license">License</a> •
+  <a href="#what-is-next">What is next</a>
 </p>
 
-![screenshot](https://github.com/mireabot/TwitterClone/blob/main/Scene%204_1.png)
-![screenshot](https://github.com/mireabot/TwitterClone/blob/main/Scene%204_1.png)
+![screenshot](https://github.com/mireabot/GitHub-Followers/blob/main/GitHubMain.png)
+![screenshot](https://github.com/mireabot/GitHub-Followers/blob/main/GitHubFeatures.png)
 
 ## Features
 
@@ -39,7 +40,7 @@
 * Reusable elements
   - Custom UI elements configured from basic elements
   
-## What is next?
+## What is next
 
 * Refactor constaints to simple functions
 * Update Network Manager to iOS 15+
